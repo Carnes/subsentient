@@ -50,7 +50,5 @@ class ClientManager {
 
         $greetingCmd = array("cmd"=>"system message", "message"=>$newClient->alias." has joined.");
         WebSocket::sendDataToAll($greetingCmd);
-
-        echo $newClient->ip." joined as ".$newClient->alias."\n"; //FIXME - find a better way to log console messages
     }
 } 

@@ -23,6 +23,7 @@ class RequestHandler {
         }
         else if($cmd=="connect") {
             $clientManager->createNewClient($request->connection);
+            Logger::Log($client->ip." joined as ".$client->alias);
         }
         else if($cmd=="turn"){
             if($data->direction=="up" || $data->direction=="down" || $data->direction=="left"|| $data->direction=="right")
