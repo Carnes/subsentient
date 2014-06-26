@@ -25,6 +25,7 @@ function __autoload($class_name) {
     <div id="header">
         <h2>Sub-Sentient</h2>
         <h4>A javascript development game.</h4>
+        Latest feature: Keyboard movement.  You can move around using WASD and use T to chat.
     </div>
 
     <canvas id="gameBoard"></canvas>
