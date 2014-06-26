@@ -11,7 +11,7 @@ final class MapEntityHelper {
     public static function setup($entity, $typeID)
     {
         if(!($entity instanceof MapEntity))
-        {echo "Warning: MapEntityBuilder->setup on non MapEntity.\n"; return;}
+        {Logger::Log("Warning: MapEntityBuilder->setup on non MapEntity."); return;}
 
         if($typeID==MapEntityType::Boulder) {
             $entity->isPassable = false;

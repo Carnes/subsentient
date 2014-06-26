@@ -30,10 +30,10 @@ class Map
     public function addEntityToMapRandomly($entity)
     {
         if(!($entity instanceof MapEntity))
-        {echo "Warning: Map->addEntityToMapRandomly on non MapEntity.\n"; return;}
+        {Logger::Log("Warning: Map->addEntityToMapRandomly on non MapEntity."); return;}
 
-        $x = rand(15, Config::WorldSizeX-15);
-        $y = rand(15, Config::WorldSizeY-15);
+        $x = rand(Config::MinimumSpawningDistanceFromBorder, Config::WorldSizeX-Config::MinimumSpawningDistanceFromBorder);
+        $y = rand(Config::MinimumSpawningDistanceFromBorder, Config::WorldSizeY-Config::MinimumSpawningDistanceFromBorder);
         $this->_entities[] = $entity;
         $this->_map[$x][$y]->addEntity($entity);
     }
@@ -49,10 +49,10 @@ class Map
     public function moveEntity($entity,$moveX,$moveY)
     {
         if(! $this->hasEntity($entity))
-        { echo "Warning: Map->moveEntity on non-mapped entity.\n"; return false;}
+        { Logger::Log("Warning: Map->moveEntity on non-mapped entity."); return false;}
 
         if(abs($moveX) + abs($moveY)!=1)
-        { echo "Warning: Map->moveEntity tried to move more than one tile distance. x:".$moveX." y:".$moveY."\n"; return false;}
+        { Logger::Log("Warning: Map->moveEntity tried to move more than one tile distance. x:".$moveX." y:".$moveY); return false;}
 
         $x = $moveX+$entity->tile->x;
         $y = $moveY+$entity->tile->y;

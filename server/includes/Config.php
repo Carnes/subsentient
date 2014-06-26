@@ -9,4 +9,5 @@ class Config {
     const LocalMapX = 11; //Must be an odd number, to display character in center
     const LocalMapY = 9; //Must be an odd number, to display character in center
     const LogFile = 'subsentient.log';
+    const MinimumSpawningDistanceFromBorder = 6;
 }

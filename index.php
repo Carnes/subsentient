@@ -31,7 +31,7 @@ function __autoload($class_name) {
 
     <div id="characterCard"></div>
 
-    <div id="manualControls">
+    <div id="manualControls" tabindex="0">
         Controls<br>
         <span style="width:35px; display: inline-block;">Move</span>
         <input id="moveLeft" type="button" value="left">
@@ -49,7 +49,7 @@ function __autoload($class_name) {
 
     <div id="logContainer">
         <div id="systemLog"></div>
-        <input id="chatMessage" type="text" size="80"/>
+        <input id="chatMessage" type="text" size="80" tabindex="1"/>
         <input id="sendChatMessage" type="button" value="Send">
     </div>
 </div>
@@ -76,12 +76,13 @@ function __autoload($class_name) {
         var entitySizeX = <?php echo Config::EntityWidth ?>;
         var entitySizeY = <?php echo Config::EntityHeight ?>;
         var tileSize = <?php echo Config::TileSize ?>;
+        var keyMap = JSON.parse('<?php echo Config::getKeyMap() ?>');
 
         new main.characterCard();
         new main.webSocketClient(webSocketServerUri);
         new main.chat();
         new main.map(tileSize, mapSizeX, mapSizeY, entitySizeX, entitySizeY);
-        new main.manualControl();
+        new main.manualControl(keyMap);
     });
 </script>
 
