@@ -9,6 +9,6 @@ class Client extends PlayerEntity {
         $this->alias = ClientHelper::getRandomAlias();
         socket_getpeername($newConnection, $this->ip);
 
-        parent::__constructor();
+        parent::__construct();
     }
 }

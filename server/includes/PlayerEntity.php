@@ -1,7 +1,7 @@
 <?php
 class PlayerEntity extends Entity
 {
-    public function __constructor(){
+    public function __construct(){
         $this->pose = "default";
         $this->typeID = EntityType::Player;
         $this->isPassable = false;

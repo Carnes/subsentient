@@ -27,7 +27,10 @@ class Tile
         if($typeID==TileType::Grass)
         {
             $this->name = "Grass";
-            $this->variation = rand(1,5);
+            if(rand(1,2)==1)
+                $this->variation = rand(1,12);
+            else
+                $this->variation = 1;
         }
 
     }

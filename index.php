@@ -25,7 +25,7 @@ function __autoload($class_name) {
     <div id="header">
         <h2>Sub-Sentient</h2>
         <h4>A javascript development game.</h4>
-        Latest feature: Keyboard movement.  You can move around using WASD and use T to chat.
+            Latest features: New rock entity.  Keyboard movement.  You can move around using WASD and use T to chat.
     </div>
 
     <canvas id="gameBoard"></canvas>
@@ -55,19 +55,28 @@ function __autoload($class_name) {
     </div>
 </div>
 
-<img id="Tile: Grass 1" src="img/tiles/grass64v1.jpg" style="display: none;">
-<img id="Tile: Grass 2" src="img/tiles/grass64v2.jpg" style="display: none;">
-<img id="Tile: Grass 3" src="img/tiles/grass64v3.jpg" style="display: none;">
-<img id="Tile: Grass 4" src="img/tiles/grass64v4.jpg" style="display: none;">
-<img id="Tile: Grass 5" src="img/tiles/grass64v5.jpg" style="display: none;">
-<img id="Tile: World Edge 1" src="img/tiles/lava64.jpg" style="display: none;">
-<img id="Entity: player default" src="img/entities/player_default.png" style="display: none;">
-<img id="Entity: player left" src="img/entities/player_left.png" style="display: none;">
-<img id="Entity: player right" src="img/entities/player_right.png" style="display: none;">
-<img id="Entity: player up" src="img/entities/player_up.png" style="display: none;">
-<img id="Entity: player down" src="img/entities/player_down.png" style="display: none;">
-<img id="Entity: player sitcry" src="img/entities/player_sitcry.png" style="display: none;">
-
+<div id="artwork" style="display: none;">
+    <img id="Tile: Grass 1" src="img/tiles/grass64v1.jpg">
+    <img id="Tile: Grass 2" src="img/tiles/grass64v2.jpg">
+    <img id="Tile: Grass 3" src="img/tiles/grass64v3.jpg">
+    <img id="Tile: Grass 4" src="img/tiles/grass64v4.jpg">
+    <img id="Tile: Grass 5" src="img/tiles/grass64v5.jpg">
+    <img id="Tile: Grass 6" src="img/tiles/grass64v6.png">
+    <img id="Tile: Grass 7" src="img/tiles/grass64v7.png">
+    <img id="Tile: Grass 8" src="img/tiles/grass64v8.png">
+    <img id="Tile: Grass 9" src="img/tiles/grass64v9.png">
+    <img id="Tile: Grass 10" src="img/tiles/grass64v10.png">
+    <img id="Tile: Grass 11" src="img/tiles/grass64v11.png">
+    <img id="Tile: Grass 12" src="img/tiles/grass64v12.png">
+    <img id="Tile: World Edge 1" src="img/tiles/lava64.jpg">
+    <img id="Entity: player default" src="img/entities/player_default.png">
+    <img id="Entity: player left" src="img/entities/player_left.png">
+    <img id="Entity: player right" src="img/entities/player_right.png">
+    <img id="Entity: player up" src="img/entities/player_up.png">
+    <img id="Entity: player down" src="img/entities/player_down.png">
+    <img id="Entity: player sitcry" src="img/entities/player_sitcry.png">
+    <img id="Entity: rock default" src="img/entities/rock_default.png">
+</div>
 <script>
     $(function(){
         window.main = window.main || {};

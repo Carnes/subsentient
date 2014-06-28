@@ -15,6 +15,18 @@ class Map
         $this->_map = array();
         $this->_entities = array();
         $this->buildEmptyMap();
+        $this->populateMapRandomlyWithEntities();
+    }
+
+    private function populateMapRandomlyWithEntities()
+    {
+        $worldSize = Config::WorldSizeX*Config::WorldSizeY;
+        $numRandRocks = rand($worldSize*0.01,$worldSize*0.05);
+        for($i=0;$i<$numRandRocks; $i++)
+        {
+            $newRock = new RockEntity();
+            $this->addEntityToMapRandomly($newRock);
+        }
     }
 
     private function buildEmptyMap()
@@ -31,9 +43,12 @@ class Map
     {
         if(!($entity instanceof Entity))
         {Logger::Log("Warning: Map->addEntityToMapRandomly on non Entity."); return;}
-
-        $x = rand(Config::MinimumSpawningDistanceFromBorder, Config::WorldSizeX-Config::MinimumSpawningDistanceFromBorder);
-        $y = rand(Config::MinimumSpawningDistanceFromBorder, Config::WorldSizeY-Config::MinimumSpawningDistanceFromBorder);
+        if($entity->typeID==EntityType::Player)
+            $minDist = Config::MinimumSpawningDistanceFromBorder;
+        else
+            $minDist = 1;
+        $x = rand($minDist, Config::WorldSizeX-$minDist);
+        $y = rand($minDist, Config::WorldSizeY-$minDist);
         $this->_entities[] = $entity;
         $this->_map[$x][$y]->addEntity($entity);
     }
@@ -80,7 +95,7 @@ class Map
         $xEnd = $entity->tile->x+$offsetX;
         if($xEnd >= Config::WorldSizeX) $xEnd = Config::WorldSizeX-1;
         $yEnd = $entity->tile->y+$offsetY;
-        if($yEnd >= Config::WorldSizeY) $xEnd = Config::WorldSizeY-1;
+        if($yEnd >= Config::WorldSizeY) $yEnd = Config::WorldSizeY-1;
 
         for($x=$xStart; $x <= $xEnd; $x++)
             for($y=$yStart; $y <= $yEnd; $y++)
@@ -111,6 +126,7 @@ class Map
             $localY=0;
             $localX++;
         }
+        //var_dump($localMap);
         return $localMap;
     }
 }

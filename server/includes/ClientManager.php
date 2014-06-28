@@ -50,7 +50,6 @@ class ClientManager {
 
         $greetingCmd = array("cmd"=>"system message", "message"=>$newClient->alias." has joined.");
         WebSocket::sendDataToAll($greetingCmd);
-        var_dump($newClient);
         return $newClient;
     }
 } 
