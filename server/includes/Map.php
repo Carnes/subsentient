@@ -29,8 +29,8 @@ class Map
 
     public function addEntityToMapRandomly($entity)
     {
-        if(!($entity instanceof MapEntity))
-        {Logger::Log("Warning: Map->addEntityToMapRandomly on non MapEntity."); return;}
+        if(!($entity instanceof Entity))
+        {Logger::Log("Warning: Map->addEntityToMapRandomly on non Entity."); return;}
 
         $x = rand(Config::MinimumSpawningDistanceFromBorder, Config::WorldSizeX-Config::MinimumSpawningDistanceFromBorder);
         $y = rand(Config::MinimumSpawningDistanceFromBorder, Config::WorldSizeY-Config::MinimumSpawningDistanceFromBorder);
@@ -85,7 +85,7 @@ class Map
         for($x=$xStart; $x <= $xEnd; $x++)
             for($y=$yStart; $y <= $yEnd; $y++)
                 foreach($this->_map[$x][$y]->entities as $entityInTile)
-                    if($entityInTile->typeID == MapEntityType::Player)
+                    if($entityInTile->typeID == EntityType::Player)
                         $nearEntities[] = $entityInTile;
         return $nearEntities;
     }

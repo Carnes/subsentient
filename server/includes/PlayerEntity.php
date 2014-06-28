@@ -1,0 +1,17 @@
+<?php
+class PlayerEntity extends Entity
+{
+    public function __constructor(){
+        $this->pose = "default";
+        $this->typeID = EntityType::Player;
+        $this->isPassable = false;
+        $this->typeName = "player";
+    }
+
+    public function getData()
+    {
+        $data = parent::getData();
+        $data["alias"]=$this->alias;
+        return $data;
+    }
+}

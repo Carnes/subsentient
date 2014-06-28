@@ -16,7 +16,6 @@ class WebSocket
 
         $secKey = $headers['Sec-WebSocket-Key'];
         $secAccept = base64_encode(pack('H*', sha1($secKey . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
-        //hand shaking header
         $upgrade  = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
             "Upgrade: websocket\r\n" .
             "Connection: Upgrade\r\n" .
@@ -81,7 +80,6 @@ class WebSocket
     {
         $b1 = 0x80 | (0x1 & 0x0f);
         $length = strlen($text);
-
         if($length <= 125)
             $header = pack('CC', $b1, $length);
         elseif($length > 125 && $length < 65536)

@@ -1,5 +1,5 @@
 <?php
-class Client extends MapEntity {
+class Client extends PlayerEntity {
     public $connection;
     public $ip;
     public $alias;
@@ -9,6 +9,6 @@ class Client extends MapEntity {
         $this->alias = ClientHelper::getRandomAlias();
         socket_getpeername($newConnection, $this->ip);
 
-        parent::__constructor(MapEntityType::Player);
+        parent::__constructor();
     }
 }

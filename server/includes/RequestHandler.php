@@ -22,7 +22,7 @@ class RequestHandler {
             WebSocket::sendDataToAll($outData);
         }
         else if($cmd=="connect") {
-            $clientManager->createNewClient($request->connection);
+            $client = $clientManager->createNewClient($request->connection);
             Logger::Log($client->ip." joined as ".$client->alias);
         }
         else if($cmd=="turn"){
