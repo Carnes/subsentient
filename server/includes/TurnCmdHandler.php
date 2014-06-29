@@ -12,10 +12,10 @@ class TurnCmdHandler extends CmdHandler {
             $clientsAffected = $map->getPlayerEntitiesInVicinityOf($request->client);
             foreach($clientsAffected as $clientAffected)
             {
-                $mapData = array("cmd"=>"map update", "data"=>$map->getLocalMapForEntity($clientAffected));
+                $mapData = array("cmd"=>"tile update", "data"=>$map->getLocalMapForEntity($clientAffected));
                 WebSocket::sendDataToOne($mapData, $clientAffected->connection);
             }
-            $mapData = array("cmd"=>"map update", "data"=>$map->getLocalMapForEntity($request->client));
+            $mapData = array("cmd"=>"tile update", "data"=>$map->getLocalMapForEntity($request->client));
             WebSocket::sendDataToOne($mapData, $request->client->connection);
         }
     }

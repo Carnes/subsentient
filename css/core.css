@@ -37,9 +37,9 @@ ul label {
     border:3px solid;
     border-color: darkslategray;
     box-shadow: 5px 5px 5px #888888;
-    max-height: 300px;
+    max-height: 1500px;
     max-width: 250px;
-    height: 300px;
+    height: 150px;
     width: 250px;
     overflow: auto;
     margin: 10px;

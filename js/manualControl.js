@@ -9,6 +9,17 @@
                 cmd: 'move',
                 direction: direction
             };
+            var animData = {x: 0, y: 0};
+            if(direction=="left")
+                animData.x=-1;
+            if(direction=="right")
+                animData.x=1;
+            if(direction=="up")
+                animData.y=-1;
+            if(direction=="down")
+                animData.y=1;
+
+            ns.Screwdriver().publish("animate: move", animData);
             ns.Screwdriver().publish("webSocket send",data);
         };
 

@@ -8,9 +8,12 @@
         this.entitySizeX = entitySizeX;
         this.canvasWidth = mapSizeX * tileSize;
         this.canvasHeight = mapSizeY * tileSize;
+        this.xOffset = 0;
+        this.yOffset = 0;
         this.map = [];
         this.canvas = document.getElementById("gameBoard");
         this.ctx = this.canvas.getContext("2d");
+        this.animating = false;
 
         this.initialize = function(){
             self.resizeCanvas();
@@ -18,6 +21,13 @@
             self.ctx.textAlign="center";
             self.ctx.strokeText("no map data",self.canvasWidth/2, self.canvasHeight/2);
             ns.Screwdriver().subscribe(this);
+            window.requestAnimationFrame =
+                window.requestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.msRequestAnimationFrame;
+
+            $('#characterCard').click(self.animateStart);
         };
 
         this.resizeCanvas = function(){
@@ -27,7 +37,17 @@
         this.onEvent = {
             "netEvent: map update": function(data) {
                 self.map = data.data;
+                if(self.animating === true)
+                    self.cancelAnimation();
                 self.refreshDisplay();
+            },
+            "netEvent: tile update": function(data) {
+                self.map = data.data;
+                if(self.animating === false)
+                    self.refreshDisplay();
+            },
+            "animate: move": function(data){
+                self.animateStart(data);
             }
         };
 
@@ -46,11 +66,11 @@
         };
 
         this.renderEntity = function(entity, x, y){
+
             var imgName = "Entity: "+entity.type+" "+entity.pose;
             var img=document.getElementById(imgName);
             var xPos = (x*self.tileSize);
             var yPos = (y*self.tileSize) -(self.entitySizeY-self.tileSize);
-            self.ctx.drawImage(img, xPos, yPos);
             if(entity.type=="player")
             {
                 var textYPos = yPos-5;
@@ -63,6 +83,12 @@
                 self.ctx.strokeStyle='black';
                 self.ctx.strokeText(entity.alias,textXPos, textYPos);
             }
+            else
+            {
+                xPos += self.xOffset;
+                yPos += +self.yOffset;
+            }
+            self.ctx.drawImage(img, xPos, yPos);
         };
 
         this.renderTiles = function(){
@@ -79,8 +105,8 @@
                 console.log('Critical error: could not find image: "'+"Tile: "+tile.type+" "+tile.variation+'"');
             else
             {
-                var xPos = x*self.tileSize;
-                var yPos = y*self.tileSize;
+                var xPos = (x*self.tileSize)+self.xOffset;
+                var yPos = (y*self.tileSize)+self.yOffset;
                 self.ctx.drawImage(img, xPos, yPos);
             }
         };
@@ -92,6 +118,50 @@
             self.ctx.fillRect(0, 0, self.canvasWidth, self.canvasHeight);
             self.ctx.restore();
         };
+
+        this.animateStart = function(animData){
+            if(self.animating==true)
+                return;
+            self.xOffset = 0;
+            self.yOffset = 0;
+            self.animating=true;
+            self.animationDirection = animData;
+            self.animationStart = null;
+            requestAnimationFrame(self.animateFrame);
+        };
+
+        this.cancelAnimation = function(){
+            self.xOffset = 0;
+            self.yOffset = 0;
+            self.animationStart = null;
+            self.animating = false;
+        };
+
+        this.animateFrame = function(timeStamp){
+            if(self.animating===false)
+                return;
+            var progressMax = 250;
+            var progress;
+            if (self.animationStart === null) self.animationStart = timeStamp;
+            progress = timeStamp - self.animationStart;
+            if(self.animationDirection.x<0)
+                self.xOffset = Math.floor(self.tileSize * (progress/progressMax));
+            if(self.animationDirection.x>0)
+                self.xOffset = Math.floor(self.tileSize * (progress/progressMax))*-1;
+            if(self.animationDirection.y<0)
+                self.yOffset = Math.floor(self.tileSize * (progress/progressMax));
+            if(self.animationDirection.y>0)
+                self.yOffset = Math.floor(self.tileSize * (progress/progressMax))*-1;
+            self.refreshDisplay();
+
+            if (progress < progressMax)
+                requestAnimationFrame(self.animateFrame);
+            else
+            {
+                self.cancelAnimation();
+                //self.refreshDisplay();
+            }
+        }
 
         this.initialize();
     };
