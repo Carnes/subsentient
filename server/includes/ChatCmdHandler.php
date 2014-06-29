@@ -4,9 +4,7 @@ class ChatCmdHandler extends CmdHandler {
         $data = $request->data;
         $cmd = $data->cmd;
         $message = $data->message;
-        $clientManager = ClientManager::getInstance();
-        $client = $clientManager->getClientFromConnection($request->connection);
-        $outData = array('cmd'=>$cmd, 'message'=>$message, 'fromAlias'=>$client->alias);
+        $outData = array('cmd'=>$cmd, 'message'=>$message, 'fromAlias'=>$request->client->alias);
         WebSocket::sendDataToAll($outData);
     }
 }
