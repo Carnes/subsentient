@@ -15,7 +15,7 @@ class SocketManager {
 
         socket_set_option($this->serviceConnection, SOL_SOCKET, SO_REUSEADDR, 1);
 
-        socket_bind($this->serviceConnection, 0, Config::$port);
+        socket_bind($this->serviceConnection, 0, Config::Port);
 
         socket_listen($this->serviceConnection);
 

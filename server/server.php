@@ -5,7 +5,6 @@ function __autoload($class_name) {
 };
 
 $socketManager = SocketManager::getInstance();
-$clientManager = ClientManager::getInstance();
 $requestHandler = RequestHandler::getInstance();
 
 declare(ticks=1);
@@ -21,7 +20,7 @@ pcntl_signal(SIGTERM, "closeAndExit");
 
 Logger::Log("Server Started");
 while (true) {
-    usleep(Config::$microSecondsPerTick);
+    usleep(Config::MicroSecondsPerTick);
 
     $requests = $socketManager->getClientRequests();
     foreach($requests as $request)

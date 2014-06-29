@@ -19,8 +19,8 @@ class WebSocket
         $upgrade  = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
             "Upgrade: websocket\r\n" .
             "Connection: Upgrade\r\n" .
-            "WebSocket-Origin: http://".Config::$host."\r\n" .
-            "WebSocket-Location: ws://".Config::$host.":".Config::$port."/subsentient\r\n".
+            "WebSocket-Origin: http://".Config::Host."\r\n" .
+            "WebSocket-Location: ws://".Config::Host.":".Config::Port."/subsentient\r\n".
             "Sec-WebSocket-Accept:$secAccept\r\n\r\n";
         socket_write($client_conn,$upgrade,strlen($upgrade));
     }
