@@ -21,7 +21,7 @@ pcntl_signal(SIGTERM, "closeAndExit");
 Logger::Log("Server Started");
 while (true) {
     usleep(Config::MicroSecondsPerTick);
-
+    $requestHandler->tick();
     $requests = $socketManager->getClientRequests();
     foreach($requests as $request)
         $requestHandler->dispatchRequest($request);

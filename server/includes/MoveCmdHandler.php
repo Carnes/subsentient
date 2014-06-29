@@ -6,14 +6,15 @@ class MoveCmdHandler extends CmdHandler {
     private $map;
     private $requestHandler;
 
-    public function __construct($request) {
+    public function proc($request){}
+    public function handle($request) {
         $this->request = $request;
-        $this->map = Map::getInstance();
         $this->requestHandler = RequestHandler::getInstance();
 
         if($this->requestHandler->isClientInQueue($request->client))
             return; //FIXME - need a way to signal to clients that we have rejected their move
-        
+
+        $this->map = Map::getInstance();
         $this->calcMoveDirection();
         if($this->attemptMove()) //FIXME - need a way to signal to clients that their move failed
         {

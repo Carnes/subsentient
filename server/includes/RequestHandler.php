@@ -8,6 +8,17 @@ class RequestHandler {
         $this->_queue = array();
     }
 
+    public function tick(){
+        $currentTime = microtime(true);
+        foreach($this->_queue as $request)
+            if($request->procTime <= $currentTime)
+            {
+                $handlerClassName = Config::$requestCommandsAllowed[$request->data->cmd];
+                $handler = new $handlerClassName();
+                $handler->handle($request);
+            }
+    }
+
     public function isClientInQueue($client)
     {
         foreach($this->_queue as $request)
@@ -55,7 +66,8 @@ class RequestHandler {
             return;
         }
         $handlerClassName = Config::$requestCommandsAllowed[$data->cmd];
-        new $handlerClassName($request);
+        $handler = new $handlerClassName();
+        $handler->handle($request);
         return;
     }
 } 

@@ -1,4 +1,5 @@
 <?php
 abstract class CmdHandler {
-    abstract function __construct($request);
+    abstract function handle($request);
+    abstract function proc($request);
 }

@@ -1,6 +1,9 @@
 <?php
 class ChatCmdHandler extends CmdHandler {
-    public function __construct($request){
+
+    public function proc($request){}
+
+    public function handle($request){
         $data = $request->data;
         $cmd = $data->cmd;
         $message = $data->message;
