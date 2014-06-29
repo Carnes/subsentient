@@ -4,15 +4,22 @@ class MoveCmdHandler extends CmdHandler {
     private $y;
     private $request;
     private $map;
-    private $requestHandler;
+    const Delay = 0.300000;
 
-    public function proc($request){}
-    public function handle($request) {
+    public function handle($request){
         $this->request = $request;
-        $this->requestHandler = RequestHandler::getInstance();
-
-        if($this->requestHandler->isClientInQueue($request->client))
+        $requestHandler = RequestHandler::getInstance();
+        if($requestHandler->isClientInQueue($request->client))
             return; //FIXME - need a way to signal to clients that we have rejected their move
+        $request->procTime = microtime(true) + $this::Delay;
+        $requestHandler->addRequestToQueue($request);
+        $this->turnInDirectionOfMove();
+    }
+
+    public function proc($request) {
+        $this->request = $request;
+        $requestHandler = RequestHandler::getInstance();
+        $requestHandler->removeRequestFromQueue($request);
 
         $this->map = Map::getInstance();
         $this->calcMoveDirection();
@@ -21,6 +28,12 @@ class MoveCmdHandler extends CmdHandler {
             $this->notifyNearbyPlayers();
             $this->notifyPlayer();
         }
+    }
+
+    private function turnInDirectionOfMove()
+    {
+        $turnHandler = new TurnCmdHandler();
+        $turnHandler->handle($this->request);
     }
 
     private function calcMoveDirection()

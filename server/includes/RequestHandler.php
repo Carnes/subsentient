@@ -15,7 +15,7 @@ class RequestHandler {
             {
                 $handlerClassName = Config::$requestCommandsAllowed[$request->data->cmd];
                 $handler = new $handlerClassName();
-                $handler->handle($request);
+                $handler->proc($request);
             }
     }
 

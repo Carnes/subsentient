@@ -1,6 +1,8 @@
 <?php
 class ConnectionCmdHandler extends CmdHandler{
+
     public function proc($request){}
+
     public function handle($request) {
         $clientManager = ClientManager::getInstance();
 
