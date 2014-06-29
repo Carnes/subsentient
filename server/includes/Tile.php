@@ -1,11 +1,4 @@
 <?php
-
-final class TileType
-{
-    const WorldEdge = 0;
-    const Grass = 1;
-}
-
 class Tile
 {
     public $typeID;
@@ -19,20 +12,6 @@ class Tile
         $this->typeID = $typeID;
         $this->x = $x;
         $this->y = $y;
-        if($typeID==TileType::WorldEdge)
-        {
-            $this->name = "World Edge";
-            $this->variation = 1;
-        }
-        if($typeID==TileType::Grass)
-        {
-            $this->name = "Grass";
-            if(rand(1,2)==1)
-                $this->variation = rand(1,12);
-            else
-                $this->variation = 1;
-        }
-
     }
 
     public function addEntity($entity)

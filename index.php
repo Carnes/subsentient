@@ -61,14 +61,26 @@ function __autoload($class_name) {
     <img id="Tile: Grass 3" src="img/tiles/grass64v3.jpg">
     <img id="Tile: Grass 4" src="img/tiles/grass64v4.jpg">
     <img id="Tile: Grass 5" src="img/tiles/grass64v5.jpg">
-    <img id="Tile: Grass 6" src="img/tiles/grass64v6.png">
-    <img id="Tile: Grass 7" src="img/tiles/grass64v7.png">
-    <img id="Tile: Grass 8" src="img/tiles/grass64v8.png">
-    <img id="Tile: Grass 9" src="img/tiles/grass64v9.png">
-    <img id="Tile: Grass 10" src="img/tiles/grass64v10.png">
-    <img id="Tile: Grass 11" src="img/tiles/grass64v11.png">
-    <img id="Tile: Grass 12" src="img/tiles/grass64v12.png">
+    <img id="Tile: Grass 6" src="img/tiles/grass64v6.jpg">
+
+    <img id="Tile: Brush 1" src="img/tiles/brush64v1.jpg">
+    <img id="Tile: Brush 2" src="img/tiles/brush64v2.jpg">
+    <img id="Tile: Brush 3" src="img/tiles/brush64v3.jpg">
+    <img id="Tile: Brush 4" src="img/tiles/brush64v4.jpg">
+    <img id="Tile: Brush 5" src="img/tiles/brush64v5.jpg">
+    <img id="Tile: Brush 6" src="img/tiles/brush64v6.jpg">
+    <img id="Tile: Brush 7" src="img/tiles/brush64v7.jpg">
+
+    <img id="Tile: Bush 1" src="img/tiles/bush64v1.jpg">
+
+    <img id="Tile: Rare 1" src="img/tiles/rare64v1.jpg">
+    <img id="Tile: Rare 2" src="img/tiles/rare64v2.jpg">
+    <img id="Tile: Rare 3" src="img/tiles/rare64v3.jpg">
+    <img id="Tile: Rare 4" src="img/tiles/rare64v4.jpg">
+    <img id="Tile: Rare 5" src="img/tiles/rare64v5.jpg">
+
     <img id="Tile: World Edge 1" src="img/tiles/lava64.jpg">
+
     <img id="Entity: player default" src="img/entities/player_default.png">
     <img id="Entity: player left" src="img/entities/player_left.png">
     <img id="Entity: player right" src="img/entities/player_right.png">

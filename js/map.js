@@ -75,9 +75,14 @@
             if(tile==0)
                 return;
             var img=document.getElementById("Tile: "+tile.type+" "+tile.variation);
-            var xPos = x*self.tileSize;
-            var yPos = y*self.tileSize;
-            self.ctx.drawImage(img, xPos, yPos);
+            if(img==null)
+                console.log('Critical error: could not find image: "'+"Tile: "+tile.type+" "+tile.variation+'"');
+            else
+            {
+                var xPos = x*self.tileSize;
+                var yPos = y*self.tileSize;
+                self.ctx.drawImage(img, xPos, yPos);
+            }
         };
 
         this.clearDisplay = function(){

@@ -31,12 +31,27 @@ class Map
 
     private function buildEmptyMap()
     {
+        $grassChance = array(1,800);
+        $brushChance = array(801, 950);
+        $bushChance = array(951,996);
+        $rareChance = array(997,1000);
+
         for($x=0; $x<=Config::WorldSizeX; $x++)
             for($y=0; $y<=Config::WorldSizeY; $y++)
                 if($x==0 || $x==Config::WorldSizeX || $y==0 || $y==Config::WorldSizeY)
-                    $this->_map[$x][$y] = new Tile(TileType::WorldEdge, $x, $y);
+                    $this->_map[$x][$y] = new WorldEdgeTile($x, $y);
                 else
-                    $this->_map[$x][$y] = new Tile(TileType::Grass, $x, $y);
+                {
+                    $choice = rand(1,1000);
+                    if($choice >= $grassChance[0] && $choice <=$grassChance[1])
+                        $this->_map[$x][$y] = new GrassTile($x, $y);
+                    else if($choice >= $brushChance[0] && $choice <=$brushChance[1])
+                        $this->_map[$x][$y] = new BrushTile($x, $y);
+                    else if($choice >= $bushChance[0] && $choice <=$bushChance[1])
+                        $this->_map[$x][$y] = new BushTile($x, $y);
+                    else if($choice >= $rareChance[0] && $choice <=$rareChance[1])
+                        $this->_map[$x][$y] = new RareTile($x, $y);
+                }
     }
 
     public function addEntityToMapRandomly($entity)
@@ -126,7 +141,6 @@ class Map
             $localY=0;
             $localX++;
         }
-        //var_dump($localMap);
         return $localMap;
     }
 }
