@@ -14,6 +14,7 @@
         this.canvas = document.getElementById("gameBoard");
         this.ctx = this.canvas.getContext("2d");
         this.animating = false;
+        this.characterID = '';
 
         this.initialize = function(){
             self.resizeCanvas();
@@ -48,6 +49,15 @@
             },
             "animate: move": function(data){
                 self.animateStart(data);
+            },
+
+            "animate: cancel": function(data){
+                self.cancelAnimation();
+                self.refreshDisplay();
+            },
+
+            'netEvent: client state change': function(data){
+                self.characterID = data.client.id;
             }
         };
 
@@ -71,6 +81,12 @@
             var img=document.getElementById(imgName);
             var xPos = (x*self.tileSize);
             var yPos = (y*self.tileSize) -(self.entitySizeY-self.tileSize);
+
+            if(entity.type!="player" || self.characterID != entity.id) {
+                xPos += self.xOffset;
+                yPos += self.yOffset;
+            }
+
             if(entity.type=="player")
             {
                 var textYPos = yPos-5;
@@ -83,11 +99,7 @@
                 self.ctx.strokeStyle='black';
                 self.ctx.strokeText(entity.alias,textXPos, textYPos);
             }
-            else
-            {
-                xPos += self.xOffset;
-                yPos += +self.yOffset;
-            }
+
             self.ctx.drawImage(img, xPos, yPos);
         };
 

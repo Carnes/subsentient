@@ -12,6 +12,7 @@ class PlayerEntity extends Entity
     {
         $data = parent::getData();
         $data["alias"]=$this->alias;
+        $data["id"]=$this->id;
         return $data;
     }
 }

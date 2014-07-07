@@ -11,10 +11,10 @@
             if (sub.onEvent) self.subscribers.push(sub);
         };
 
-        self.publish = function (event, value) {
+        self.publish = function (event, value1, value2, value3) {
             self.subscribers.forEach(function (item) {
                 if (item.onEvent[event])
-                    item.onEvent[event](value);
+                    item.onEvent[event](value1, value2, value3);
             });
         };
     };

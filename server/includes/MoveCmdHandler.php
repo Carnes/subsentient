@@ -8,26 +8,29 @@ class MoveCmdHandler extends CmdHandler {
 
     public function handle($request){
         $this->request = $request;
-        $requestHandler = RequestHandler::getInstance();
+        $requestHandler = RequestManager::getInstance();
         if($requestHandler->isClientInQueue($request->client))
-            return; //FIXME - need a way to signal to clients that we have rejected their move
+            return array("status"=>"fail", "reason"=>"move command already in queue");
         $request->procTime = microtime(true) + $this::Delay;
         $requestHandler->addRequestToQueue($request);
         $this->turnInDirectionOfMove();
+        return array("status"=>"queued","duration"=>$this::Delay);
     }
 
     public function proc($request) {
         $this->request = $request;
-        $requestHandler = RequestHandler::getInstance();
-        $requestHandler->removeRequestFromQueue($request);
+        $requestManager = RequestManager::getInstance();
+        $requestManager->removeRequestFromQueue($request);
 
         $this->map = Map::getInstance();
         $this->calcMoveDirection();
-        if($this->attemptMove()) //FIXME - need a way to signal to clients that their move failed
+        if($this->attemptMove())
         {
             $this->notifyNearbyPlayers();
             $this->notifyPlayer();
+            return array("status"=>"success");
         }
+        return array("status"=>"fail", "reason"=>"could not complete move");
     }
 
     private function turnInDirectionOfMove()

@@ -1,5 +1,5 @@
 <?php
-class RequestHandler {
+class RequestManager {
     private static $_instance;
 
     private $_queue;
@@ -15,7 +15,8 @@ class RequestHandler {
             {
                 $handlerClassName = Config::$requestCommandsAllowed[$request->data->cmd];
                 $handler = new $handlerClassName();
-                $handler->proc($request);
+                $response = $handler->proc($request);
+                $this->returnResponseCode($request, $response);
             }
     }
 
@@ -46,7 +47,7 @@ class RequestHandler {
 
     public static function getInstance() {
         if (!self::$_instance)
-            self::$_instance = new RequestHandler();
+            self::$_instance = new RequestManager();
         return self::$_instance;
     }
 
@@ -67,7 +68,19 @@ class RequestHandler {
         }
         $handlerClassName = Config::$requestCommandsAllowed[$data->cmd];
         $handler = new $handlerClassName();
-        $handler->handle($request);
+        $response = $handler->handle($request);
+        $this->returnResponseCode($request, $response);
         return;
+    }
+
+    public function returnResponseCode($request, $response){
+        if($response==null)
+            return;
+        if(!isset($request->data->rid)) {
+            Logger::Log("no rid: \"".$request->data->cmd."\" from ".$request->client->ip."(".$request->client->alias.")");
+            return;
+        }
+        $data = array("cmd"=>"response", "rid"=>$request->data->rid, "response"=>$response);
+        WebSocket::sendDataToOne($data,$request->connection);
     }
 } 

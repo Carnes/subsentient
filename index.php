@@ -13,6 +13,7 @@ function __autoload($class_name) {
 </head>
 <body>
 <script src="http://tageverything.org/js/jquery.js"></script>
+<script src="js/UUID.js"></script>
 <script src="js/screwdriver.js"></script>
 <script src="js/log.js"></script>
 <script src="js/webSocket.js"></script>

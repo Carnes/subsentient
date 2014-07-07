@@ -3,11 +3,15 @@
         var self = this;
         this.hasFocus = true;
         this.keyMap = keyMap;
+        this.isMoving = false;
 
         this.move = function(direction){
+            if(self.isMoving)
+                return;
             var data = {
                 cmd: 'move',
-                direction: direction
+                direction: direction,
+                rid: UUID.generate()
             };
             var animData = {x: 0, y: 0};
             if(direction=="left")
@@ -19,8 +23,27 @@
             if(direction=="down")
                 animData.y=1;
 
-            ns.Screwdriver().publish("animate: move", animData);
-            ns.Screwdriver().publish("webSocket send",data);
+            var moveCallback = function(cbData){
+                if(cbData.status == 'queued') {
+                    self.isMoving = true;
+                    ns.Screwdriver().publish("animate: move", animData); //FIXME add data.duration to animData
+                    return false;
+                }
+                else if(cbData.status == 'fail') {
+                    if(self.isMoving) {
+                        ns.Screwdriver().publish("animate: cancel");
+                        self.isMoving = false;
+                    }
+                    return true;
+                }
+                else if(cbData.status == 'success') {
+                    self.isMoving = false;
+                    return true;
+                }
+                throw "Must return true or false";
+            };
+
+            ns.Screwdriver().publish("webSocket send",data, moveCallback);
         };
 
         this.turn = function(direction){

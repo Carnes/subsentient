@@ -41,7 +41,7 @@ class ClientManager {
         $this->clients[] = $newClient;
         Map::getInstance()->addEntityToMapRandomly($newClient);
 
-        $clientStateChangeCmd = array("cmd"=>"client state change", "client"=>array("alias"=>$newClient->alias));
+        $clientStateChangeCmd = array("cmd"=>"client state change", "client"=>array("alias"=>$newClient->alias,"id"=>$newClient->id));
         WebSocket::sendDataToOne($clientStateChangeCmd, $connection);
 
         $map = Map::getInstance()->getLocalMapForEntity($newClient);
