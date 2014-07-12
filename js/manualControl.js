@@ -4,10 +4,15 @@
         this.hasFocus = true;
         this.keyMap = keyMap;
         this.isMoving = false;
+        this.queuedMove = null;
 
         this.move = function(direction){
             if(self.isMoving)
+            {
+                self.queuedMove = direction;
                 return;
+            }
+            self.isMoving = true;
             var data = {
                 cmd: 'move',
                 direction: direction,
@@ -25,7 +30,6 @@
 
             var moveCallback = function(cbData){
                 if(cbData.status == 'queued') {
-                    self.isMoving = true;
                     ns.Screwdriver().publish("animate: move", animData); //FIXME add data.duration to animData
                     return false;
                 }
@@ -34,10 +38,20 @@
                         ns.Screwdriver().publish("animate: cancel");
                         self.isMoving = false;
                     }
+                    if(self.queuedMove != null)
+                    {
+                        self.move(self.queuedMove);
+                        self.queuedMove = null;
+                    }
                     return true;
                 }
                 else if(cbData.status == 'success') {
                     self.isMoving = false;
+                    if(self.queuedMove != null)
+                    {
+                        self.move(self.queuedMove);
+                        self.queuedMove = null;
+                    }
                     return true;
                 }
                 throw "Must return true or false";
