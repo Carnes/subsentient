@@ -16,6 +16,11 @@ OPTIONAL: Move server directory outside of web accessable directory.
 How to configure:
 There are two configs, one for client and the other for server.  Be sure to edit both the base Config.php and server Config.php
 
-How to run server:
-1) cd into server directory. Ex: cd server
-2) Run server in headerless php cli.  Ex: php -q server.php
+How to manually run server:
+
+1. cd into server directory. Ex: cd server
+2. run server in headerless php cli.  Ex: php -q server.php
+
+To use the server as a service an example init.d script is included in server directory.
+
+
