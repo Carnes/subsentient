@@ -1,7 +1,8 @@
 subsentient
 ===========
 
-A javascript development game
+A javascript development game.
+Mostly me exploring the canvas element, websockets, and server-driven business logic.  Example should be running here: http://tageverything.org/subsentient/
 
 
 Requirements:
