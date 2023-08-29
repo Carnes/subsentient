@@ -24,3 +24,30 @@ How to manually run server:
 To use the server as a service an example init.d script is included in server directory.
 
 
+### Using gentoo's rc
+file: /etc/init.d/subsentient
+```bash
+#!/sbin/openrc-run
+
+depend() {
+        need net
+}
+
+start() {
+        if [ -e /var/run/subsentient.pid ]; then
+                rm -rf /var/run/subsentient.pid || return 1
+        fi
+        
+        cd /var/www/localhost/htdocs/subsentient/server
+        PID=`php -q server.php > /dev/null 2>&1 & echo $!`
+        echo $PID > /var/run/subsentient.pid
+}
+
+stop() {        
+        if [ -f /var/run/subsentient.pid ]; then
+                PID=`cat /var/run/subsentient.pid`
+                kill -HUP $PID
+                rm -f /var/run/subsentient.pid
+        fi
+}
+```
